@@ -24,8 +24,8 @@ public class MainActivity extends AppCompatActivity {
 ActivityMainBinding binding;
 
     RequestQueue requestQueue;
-    String name, username,mail;
-    String url = "http://localhost/php/test/viewdata.php";
+    String fullName, username,mail;
+    String url = "https://zirwabd.000webhostapp.com/Server/Server.php";
 
 
 
@@ -44,23 +44,24 @@ ActivityMainBinding binding;
                 binding.submitBtn.setOnClickListener(view -> {
 
 
-                    name = binding.fullName.getText().toString().trim();
+                    fullName = binding.fullName.getText().toString().trim();
                     username = binding.username.getText().toString().trim();
                     mail = binding.email.getText().toString().trim();
 
-                    if(name.isEmpty()){
+                    if(fullName.isEmpty()){
                         binding.fullName.setError("Empty!!");
                     } else if (username.isEmpty() || mail.isEmpty()) {
                         binding.username.setError("Field empty!");
                     }
                     else {
-                        saveDataToDataBase(name, username, mail);
+                        saveDataToDataBase(fullName, username, mail);
+//                        binding.submitBtn.setOnClickListener(view -> {
+//                            startActivity(new Intent(MainActivity.this, ViewActivity.class));
+//                        });
                     }
                 });
 
-                binding.submitBtn.setOnClickListener(view -> {
-                    startActivity(new Intent(MainActivity.this, ViewActivity.class));
-                });
+
 
 
 //        INSERT INTO user (SNo, Name, Age, Gender, Details, Date)
@@ -68,7 +69,7 @@ ActivityMainBinding binding;
 
             }
 
-            private void saveDataToDataBase(String name, String username, String mail) {
+            private void saveDataToDataBase(String fullName, String username, String mail) {
 
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                         new Response.Listener<String>() {
@@ -93,9 +94,9 @@ ActivityMainBinding binding;
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
                         Map<String, String> params = new HashMap<>();
-                        params.put("Name",name);
-                        params.put("userName", username);
-                        params.put("mail", mail);
+                        params.put("fullName",fullName);
+                        params.put("username", username);
+                        params.put("email", mail);
                         return params;
                     }
                 };
